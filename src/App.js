@@ -1,45 +1,44 @@
 import logo from './logo.svg';
 import './App.css';
 import {useDispatch, useSelector} from 'react-redux'
-import React from "react";
-import {addStudent} from './redux/action'
+import React, {useEffect} from "react";
+import {addStudent, getStudent} from './redux/action'
 import {Field, Form, Formik} from "formik";
+import {getStudents} from "./redux/reducers/student";
 
 function App() {
     const list = useSelector(state => {
         return state.students
     });
     const dispatch = useDispatch();
-    const listProduct = useSelector(state => {
-        return state.products
-    });
+    useEffect(()=> {
+        dispatch(getStudent())
+    }, [])
     return (
         <div>
             <Formik
                 initialValues={
                     {
                         name: '',
-                        age: '',
-                        class: ''
+                        description:'',
+                        action:''
                     }
                 }
-                onSubmit={values => {
-                    dispatch({
-                        type: 'add',
-                        payload: values
-                    })
+                onSubmit={(values, form)=> {
+                    dispatch(addStudent(values))
+                    form.resetForm();
                 }}
             >
                 <Form>
                     <Field name={'name'}></Field>
-                    <Field name={'age'}></Field>
-                    <Field name={'class'}></Field>
+                    <Field name={'description'}></Field>
+                    <Field name={'action'}></Field>
                     <button>Save</button>
                 </Form>
             </Formik>
             {list.map(item => (
                 <div>
-                    {item.name}: {item.age}: {item.class}
+                    {item.name}
                 </div>
             ))}
         </div>
