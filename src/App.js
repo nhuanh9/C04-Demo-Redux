@@ -5,14 +5,19 @@ import React, {useEffect} from "react";
 import {addStudent, getStudent} from './redux/action'
 import {Field, Form, Formik} from "formik";
 import {getStudents} from "./redux/reducers/student";
+import {getUsers} from "./redux/slice/userSlice";
 
 function App() {
     const list = useSelector(state => {
         return state.students
     });
+    const users = useSelector(state => {3
+        return state.users
+    });
     const dispatch = useDispatch();
     useEffect(()=> {
         dispatch(getStudent())
+        dispatch(getUsers())
     }, [])
     return (
         <div>
@@ -36,9 +41,9 @@ function App() {
                     <button>Save</button>
                 </Form>
             </Formik>
-            {list.map(item => (
+            {users.map(item => (
                 <div>
-                    {item.name}
+                    {item.username}
                 </div>
             ))}
         </div>

@@ -1,4 +1,5 @@
 import axios from "axios";
+import xxx from "../apis/api";
 export const addStudent = (payload) => {
     return async dispatch => {
         const response = await axios.post(
@@ -15,8 +16,8 @@ export const addStudent = (payload) => {
 
 export const getStudent = () => {
     return async dispatch => {
-        const response = await axios.get(
-            "http://localhost:3001/students"
+        const response = await xxx.get(
+            "http://localhost:8000/users"
         );
         dispatch({
             type: "list",
